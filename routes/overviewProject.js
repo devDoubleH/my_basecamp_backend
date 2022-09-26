@@ -104,14 +104,16 @@ router.post(
       name: task,
       project_id: id,
       owner: user.name,
+      done: false,
     });
 
     newTask.save().then((task) => {
-      res.json({
+      res.status(200).json({
         task: {
           id: task.project_id,
           name: task.name,
           owner: task.owner,
+          done: task.done,
         },
       });
     });
