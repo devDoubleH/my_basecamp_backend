@@ -4,6 +4,8 @@ const { check, validationResult } = require("express-validator");
 
 // Project Model
 const Project = require("../models/Project");
+const User = require("../models/User");
+
 // @route POST project
 // @desc Create a project
 // @access Public
@@ -15,12 +17,10 @@ router.post(
     check("description", "Please add description").not().isEmpty(),
     check("owner", "Please add owner").not().isEmpty(),
   ],
-  (req, res) => {
+  async (req, res) => {
     const { name, description, owner } = req.body;
 
-    if (validationResult(req).isEmpty()) {
-      return res.status(400).json({ errors: validationResult(req).array() });
-    }
+    const user = await User.findById(owner);
 
     Project.findOne({ name }).then((project) => {
       if (project)
@@ -30,6 +30,13 @@ router.post(
         name,
         description,
         owner,
+        members: [
+          {
+            name: user.name,
+            email: user.email,
+            permission: "admin",
+          },
+        ],
       });
 
       newProject.save().then((project) => {

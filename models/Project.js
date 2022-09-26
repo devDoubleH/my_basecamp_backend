@@ -18,6 +18,64 @@ const ProjectSchema = new Schema({
   members: {
     type: Array,
     required: false,
+    member: {
+      name: {
+        type: String,
+        required: true,
+      },
+      email: {
+        type: String,
+        required: true,
+      },
+      permission: {
+        type: String,
+        required: true,
+      },
+    },
+  },
+  discussions: {
+    type: Object,
+    required: false,
+    discussion: {
+      type: Array,
+      required: false,
+    },
+  },
+  tasks: {
+    type: Array,
+    required: false,
+    task: {
+      type: Object,
+      required: false,
+      howManySubTasks: {
+        type: Number,
+        required: false,
+      },
+      subTasks: {
+        type: Array,
+        required: false,
+        subTask: {
+          type: String,
+          required: false,
+        },
+      },
+    },
+  },
+  files: {
+    type: Array,
+    required: false,
+    file: {
+      type: Object,
+      required: false,
+      name: {
+        type: String,
+        required: false,
+      },
+      url: {
+        type: String,
+        required: false,
+      },
+    },
   },
 });
 
