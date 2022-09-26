@@ -84,6 +84,27 @@ router.post(
   }
 );
 
+// @route PUT project
+// @desc Update comment
+// @access Public
+
+router.put(
+  "/:id/comment",
+  check("content", "Content is required").not().isEmpty(),
+  async (req, res) => {
+    const { content } = req.body;
+    const { id } = req.params;
+
+    await Comment.findOneAndUpdate(
+      { discussion_id: id },
+      { content },
+      { new: true }
+    ).then((comment) => {
+      res.send(comment);
+    });
+  }
+);
+
 // @route POST project
 // @desc Post task
 // @access Public
@@ -116,6 +137,27 @@ router.post(
           done: task.done,
         },
       });
+    });
+  }
+);
+
+// @route PUT project
+// @desc Update task
+// @access Public
+
+router.put(
+  "/:id/task",
+  check("task", "Task is required").not().isEmpty(),
+  async (req, res) => {
+    const { task } = req.body;
+    const { id } = req.params;
+
+    await Task.findOneAndUpdate(
+      { project_id: id },
+      { name: task },
+      { new: true }
+    ).then((task) => {
+      res.send(task);
     });
   }
 );
