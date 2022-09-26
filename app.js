@@ -15,6 +15,7 @@ app.use("/login", require("./routes/login"));
 app.use("update/user", require("./routes/updateUser"));
 app.use("/project", require("./routes/project"));
 app.use("/update/project", require("./routes/updateProject"));
+app.use("/update/project", require("./routes/overviewProject"));
 
 app.listen(port, () =>
   console.log(`Example app listening on port http://localhost:${port}!`)

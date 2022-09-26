@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const { Schema, model, Types } = require("mongoose");
 
 // Create Schema
 const ProjectSchema = new Schema({
@@ -9,100 +8,38 @@ const ProjectSchema = new Schema({
   },
   description: {
     type: String,
-    required: true,
   },
   owner: {
     type: String,
     required: true,
   },
-  members: {
-    type: Array,
-    required: false,
-    member: {
-      name: {
-        type: String,
+  members: [
+    {
+      type: Object,
+      user_id: {
+        type: Types.ObjectId,
+        ref: "User",
         required: true,
       },
       email: {
         type: String,
         required: true,
       },
-      permission: {
+      role: {
         type: String,
+        enum: ["owner", "admin", "member"],
         required: true,
       },
-    },
-  },
-  discussions: {
-    type: Array,
-    required: false,
-    id: {
-      type: String,
-      required: true,
-    },
-    discussion: {
-      type: Object,
-      required: true,
-      name: {
+      permissions: {
         type: Object,
         required: true,
-      },
-      id: {
-        type: String,
-        required: true,
-      },
-      comments: {
-        type: Array,
-        required: false,
-        comment: {
-          name: {
-            type: Object,
-            required: true,
-          },
-          id: {
-            type: String,
-            required: true,
-          },
-        },
+        create: { type: Boolean, required: true },
+        read: { type: Boolean, required: true },
+        update: { type: Boolean, required: true },
+        delete: { type: Boolean, required: true },
       },
     },
-  },
-  tasks: {
-    type: Array,
-    required: false,
-    task: {
-      type: Object,
-      required: false,
-      howManySubTasks: {
-        type: Number,
-        required: false,
-      },
-      subTasks: {
-        type: Array,
-        required: false,
-        subTask: {
-          type: String,
-          required: false,
-        },
-      },
-    },
-  },
-  files: {
-    type: Array,
-    required: false,
-    file: {
-      type: Object,
-      required: false,
-      name: {
-        type: String,
-        required: false,
-      },
-      url: {
-        type: String,
-        required: false,
-      },
-    },
-  },
+  ],
 });
 
-module.exports = mongoose.model("projects", ProjectSchema);
+module.exports = model("projects", ProjectSchema);
