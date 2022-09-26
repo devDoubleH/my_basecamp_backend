@@ -1,7 +1,7 @@
 const { Schema, model, Types } = require("mongoose");
 
 const commentSchema = new Schema({
-  id: {
+  discussion_id: {
     type: Types.ObjectId,
     ref: "Discussion",
     required: true,
