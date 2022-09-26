@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { uid } = require("uid");
 const { check, validationResult } = require("express-validator");
 // Project Model
 const Project = require("../models/Project");
@@ -18,7 +19,12 @@ router.post("/:id", async (req, res) => {
 
   if (discussion) {
     Project.discussions.push({
-      comment: comment,
+      name: discussion.name,
+      id: uid(),
+      comment: {
+        name: comment.name,
+        id: uid(),
+      },
     });
   }
 });

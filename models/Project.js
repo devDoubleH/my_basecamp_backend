@@ -41,6 +41,8 @@ const ProjectSchema = new Schema({
       required: true,
     },
     discussion: {
+      type: Object,
+      required: true,
       name: {
         type: Object,
         required: true,
@@ -49,20 +51,20 @@ const ProjectSchema = new Schema({
         type: String,
         required: true,
       },
-      comment: {
-        name: {
-          type: String,
-          required: true,
-        },
-        type: String,
-        required: true,
-        id: {
-          type: String,
-          required: true,
+      comments: {
+        type: Array,
+        required: false,
+        comment: {
+          name: {
+            type: Object,
+            required: true,
+          },
+          id: {
+            type: String,
+            required: true,
+          },
         },
       },
-      type: Array,
-      required: false,
     },
   },
   tasks: {
