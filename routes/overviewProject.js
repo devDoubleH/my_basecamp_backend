@@ -21,10 +21,12 @@ router.post("/:id", async (req, res) => {
     Project.discussions.push({
       name: discussion.name,
       id: uid(),
-      comment: {
-        name: comment.name,
-        id: uid(),
-      },
+      comments: [
+        {
+          name: comment.name,
+          id: uid(),
+        },
+      ],
     });
   }
 });
