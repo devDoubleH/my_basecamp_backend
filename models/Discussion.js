@@ -5,7 +5,7 @@ const discussionSchema = new Schema({
     type: String,
     required: true,
   },
-  uid: {
+  project_id: {
     type: Types.ObjectId,
     ref: "Project",
     required: true,
