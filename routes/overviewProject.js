@@ -29,10 +29,20 @@ router.post(
 
     // find project by id and add discussion to it with owner
     try {
-      const newDiscussion = await Discussion.create({
+      const newDiscussion = new Discussion({
         name: discussion,
         uid: id,
         owner: user.name,
+      });
+
+      newDiscussion.save().then((discussion) => {
+        res.json({
+          discussion: {
+            id: discussion.id,
+            name: discussion.name,
+            owner: discussion.owner,
+          },
+        });
       });
     } catch (err) {
       console.error(err.message);
