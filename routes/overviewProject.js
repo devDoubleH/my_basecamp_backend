@@ -28,7 +28,6 @@ router.post(
     const user = await User.findOne({ _id: owner });
 
     // find project by id and add discussion to it with owner
-
     try {
       const newDiscussion = await Discussion.create({
         name: discussion,
