@@ -153,9 +153,11 @@ router.put(
     const { task } = req.body;
     const { id } = req.params;
 
+    const _task = await Task.findOne({ _id: id });
+
     await Task.findOneAndUpdate(
       { project_id: id },
-      { name: task },
+      { done: !_task.done },
       { new: true }
     ).then((task) => {
       res.send(task);
