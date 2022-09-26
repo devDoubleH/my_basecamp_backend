@@ -146,24 +146,19 @@ router.post(
 // @desc Update task
 // @access Public
 
-router.put(
-  "/:id/task",
-  check("task", "Task is required").not().isEmpty(),
-  async (req, res) => {
-    const { task } = req.body;
-    const { id } = req.params;
+router.put("/:id/task", async (req, res) => {
+  const { id } = req.params;
 
-    const _task = await Task.findOne({ _id: id });
+  const _task = await Task.findOne({ _id: id });
 
-    await Task.findOneAndUpdate(
-      { project_id: id },
-      { done: !_task.done },
-      { new: true }
-    ).then((task) => {
-      res.send(task);
-    });
-  }
-);
+  await Task.findOneAndUpdate(
+    { project_id: id },
+    { done: !_task.done },
+    { new: true }
+  ).then((task) => {
+    res.send(task);
+  });
+});
 
 // @route POST project
 // @desc Post Subtask
@@ -200,5 +195,23 @@ router.post(
     });
   }
 );
+
+// @route PUT project
+// @desc Update Subtask
+// @access Public
+
+router.put("/:id/subtask", async (req, res) => {
+  const { id } = req.params;
+
+  const _subtask = await SubTask.findOne({ _id: id });
+
+  await SubTask.findOneAndUpdate(
+    { task_id: id },
+    { done: !_subtask.done },
+    { new: true }
+  ).then((subtask) => {
+    res.send(subtask);
+  });
+});
 
 module.exports = router;
