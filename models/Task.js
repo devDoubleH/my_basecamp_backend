@@ -9,7 +9,7 @@ const taskSchema = new Schema({
     type: Boolean,
     required: true,
   },
-  id: {
+  project_id: {
     type: Types.ObjectId,
     ref: "Project",
     required: true,
