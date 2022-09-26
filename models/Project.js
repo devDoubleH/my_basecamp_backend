@@ -35,13 +35,33 @@ const ProjectSchema = new Schema({
   },
   discussions: {
     type: Array,
+    required: false,
     id: {
       type: String,
       required: true,
     },
-    required: false,
-    comment: {
-      type: String,
+    discussion: {
+      name: {
+        type: Object,
+        required: true,
+      },
+      id: {
+        type: String,
+        required: true,
+      },
+      comment: {
+        name: {
+          type: String,
+          required: true,
+        },
+        type: String,
+        required: true,
+        id: {
+          type: String,
+          required: true,
+        },
+      },
+      type: Array,
       required: false,
     },
   },
