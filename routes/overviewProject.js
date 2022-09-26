@@ -66,12 +66,6 @@ router.post(
 
     const user = await User.findOne({ _id: owner });
 
-    const _comment = Comment.findById(id);
-
-    if (_comment) {
-      return res.status(400).json({ msg: "Comment already exists" });
-    }
-
     const newComment = new Comment({
       content,
       discussion_id: id,
