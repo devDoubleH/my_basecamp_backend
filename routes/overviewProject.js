@@ -15,7 +15,6 @@ const Comment = require("../models/Comment");
 // @access Public
 
 router.post(
-  "/:id/discussion",
   [
     check("discussion", "Discussion is required").not().isEmpty(),
     check("owner", "Owner is required").not().isEmpty(),
@@ -79,6 +78,40 @@ router.post(
           name: comment.name,
           owner: comment.owner,
           message: comment.content,
+        },
+      });
+    });
+  }
+);
+
+// @route POST project
+// @desc Post task
+// @access Public
+
+router.post(
+  "/:id/task",
+  [
+    check("task", "Task is required").not().isEmpty(),
+    check("owner", "Owner is required").not().isEmpty(),
+  ],
+  async (req, res) => {
+    const { task, owner } = req.body;
+    const { id } = req.params;
+
+    const user = await User.findOne({ _id: owner });
+
+    const newTask = new Task({
+      name: task,
+      project_id: id,
+      owner: user.name,
+    });
+
+    newTask.save().then((task) => {
+      res.json({
+        task: {
+          id: task.project_id,
+          name: task.name,
+          owner: task.owner,
         },
       });
     });
