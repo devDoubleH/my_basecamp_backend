@@ -6,6 +6,7 @@ const { check, validationResult } = require("express-validator");
 const Project = require("../models/Project");
 const User = require("../models/User");
 const Task = require("../models/Task");
+const SubTask = require("../models/SubTask");
 const File = require("../models/File");
 const Discussion = require("../models/Discussion");
 const Comment = require("../models/Comment");
@@ -158,6 +159,42 @@ router.put(
       { new: true }
     ).then((task) => {
       res.send(task);
+    });
+  }
+);
+
+// @route POST project
+// @desc Post Subtask
+// @access Public
+
+router.post(
+  "/:id/subtask",
+  [
+    check("subtask", "Subtask is required").not().isEmpty(),
+    check("owner", "Owner is required").not().isEmpty(),
+  ],
+  async (req, res) => {
+    const { subtask, owner } = req.body;
+    const { id } = req.params;
+
+    const user = await User.findOne({ _id: owner });
+
+    const newSubtask = new SubTask({
+      name: subtask,
+      task_id: id,
+      owner: user.name,
+      done: false,
+    });
+
+    newSubtask.save().then((subtask) => {
+      res.status(200).json({
+        subtask: {
+          id: subtask.task_id,
+          name: subtask.name,
+          owner: subtask.owner,
+          done: subtask.done,
+        },
+      });
     });
   }
 );
