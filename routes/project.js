@@ -61,4 +61,39 @@ router.post(
   }
 );
 
+// @route GET project
+// @desc Get all projects
+// @access Public
+
+router.get("/all", async (req, res) => {
+  const projects = await Project.find();
+  res.json(projects);
+});
+
+// @route POST project
+// @desc Post projects created by user
+// @access Public
+
+router.post("/created", async (req, res) => {
+  const { token } = req.body;
+  const id = jwt.verify(token, config.get("jwtSecret")).user.id;
+  const projects = await Project.find({ project_id: id });
+  res.json(projects);
+});
+
+// @route POST project
+// @desc Post projects shared with user
+// @access Public
+
+router.post("/shared", async (req, res) => {
+  const { token } = req.body;
+  const id = jwt.verify(token, config.get("jwtSecret")).user.id;
+  //  get user from token
+  const user = await User.findById(id);
+
+  //  get projects where user is a member
+  const projects = await Project.find({ "members.email": user.email });
+  res.json(projects);
+});
+
 module.exports = router;
