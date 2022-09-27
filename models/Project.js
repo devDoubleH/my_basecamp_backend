@@ -9,9 +9,10 @@ const ProjectSchema = new Schema({
   description: {
     type: String,
   },
-  owner: {
-    type: String,
+  project_id: {
+    type: Types.ObjectId,
     required: true,
+    ref: "User",
   },
   members: [
     {

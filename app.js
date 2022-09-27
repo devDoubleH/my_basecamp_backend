@@ -13,6 +13,7 @@ app.get("/", (req, res) => res.send("Hello World!"));
 
 app.use("/register", require("./routes/register"));
 app.use("/login", require("./routes/login"));
+app.use("/user", require("./routes/user"));
 app.use("update/user", require("./routes/updateUser"));
 app.use("/project", require("./routes/project"));
 app.use("/update/project", require("./routes/updateProject"));
