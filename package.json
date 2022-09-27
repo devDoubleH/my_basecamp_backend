@@ -17,6 +17,7 @@
     "express-validator": "^6.14.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.1",
+    "react-hook-form": "^7.36.1",
     "uid": "^2.0.0"
   }
 }
