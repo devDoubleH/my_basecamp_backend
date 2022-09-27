@@ -1,13 +1,14 @@
 const express = require("express");
 require("dotenv").config();
 const app = express();
+const cors = require("cors");
 const connectDB = require("./db/db");
 const port = process.env.PORT || 5000;
 
 connectDB();
 
 app.use(express.json({ extended: false }));
-
+app.use(cors());
 app.get("/", (req, res) => res.send("Hello World!"));
 
 app.use("/register", require("./routes/register"));
