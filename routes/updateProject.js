@@ -9,40 +9,20 @@ const Project = require("../models/Project");
 // @access Public
 
 router.put("/:id", (req, res) => {
-  const { name, desciption, member } = req.body;
-
+  const { name, desciption } = req.body;
+  const { id } = req.params;
   if (name) {
-    Project.findOneAndUpdate(
-      { _id: req.params.id },
-      { name },
-      { new: true },
-      (err, project) => {
-        if (err) return res.status(500).send(err);
-        return res.send(project);
+    Project.findOneAndUpdate({ _id: id }, { name }, { new: true }).then(
+      (project) => {
+        res.json(project);
       }
     );
   }
 
   if (desciption) {
-    Project.findOneAndUpdate(
-      { _id: req.params.id },
-      { desciption },
-      { new: true },
-      (err, project) => {
-        if (err) return res.status(500).send(err);
-        return res.send(project);
-      }
-    );
-  }
-
-  if (member) {
-    Project.findOneAndUpdate(
-      { _id: req.params.id },
-      { $push: { members: member } },
-      { new: true },
-      (err, project) => {
-        if (err) return res.status(500).send(err);
-        return res.send(project);
+    Project.findOneAndUpdate({ _id: id }, { desciption }, { new: true }).then(
+      (project) => {
+        res.json(project);
       }
     );
   }
