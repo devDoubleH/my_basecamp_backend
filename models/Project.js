@@ -3,7 +3,7 @@ const { Schema, model, Types } = require("mongoose");
 // Create Schema
 const ProjectSchema = new Schema({
   name: {
-    type: String, 
+    type: String,
     required: true,
   },
   description: {
@@ -35,14 +35,6 @@ const ProjectSchema = new Schema({
         type: String,
         enum: ["owner", "admin", "member"],
         required: true,
-      },
-      permissions: {
-        type: Object,
-        required: true,
-        create: { type: Boolean, required: true },
-        read: { type: Boolean, required: true },
-        update: { type: Boolean, required: true },
-        delete: { type: Boolean, required: true },
       },
     },
   ],

@@ -5,6 +5,7 @@ const { check, validationResult } = require("express-validator");
 // Project Model
 const Project = require("../models/Project");
 const User = require("../models/User");
+const Member = require("../models/Member");
 
 // @route POST project
 // @desc Create a project
@@ -60,6 +61,46 @@ router.post(
             owner: project.owner,
           },
         });
+      });
+    });
+  }
+);
+
+// @route POST project
+// @desc add member to project
+// @access Public
+
+router.post(
+  "/addMember",
+  [
+    check("id", "Please add id").not().isEmpty(),
+    check("permissions", "Please add permissions").not().isEmpty(),
+    check("role", "Please add role").not().isEmpty(),
+    check("email", "Please add email").not().isEmpty(),
+  ],
+  async (req, res) => {
+    const { id, role, permissions } = req.body;
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const user = await User.findOne({ email });
+
+    Member.findOne({ user_id: id }).then((member) => {
+      if (member) return res.status(400).json({ msg: "Member already exists" });
+
+      const newMember = new Member({
+        user_id: id,
+        email: user.email,
+        role: role,
+        permissions: permissions,
+        name: user.name,
+      });
+
+      newMember.save().then((member) => {
+        res.json(member);
       });
     });
   }
