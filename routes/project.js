@@ -1,8 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
-const jwt = require("jsonwebtoken");
-const config = require("config");
 
 // Project Model
 const Project = require("../models/Project");
@@ -16,12 +14,10 @@ router.post(
   "/",
   [
     check("name", "Please add name").not().isEmpty(),
-    check("token", "Please add JWT").not().isEmpty(),
+    check("id", "Please add ID").not().isEmpty(),
   ],
   async (req, res) => {
-    const { name, description, token } = req.body;
-
-    const id = jwt.verify(token, config.get("jwtSecret")).user.id;
+    const { name, description, id } = req.body;
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -38,6 +34,7 @@ router.post(
         name,
         description,
         project_id: id,
+        owner: user.name,
         members: [
           {
             name: user.name,
@@ -75,8 +72,7 @@ router.get("/all", async (req, res) => {
 // @access Public
 
 router.post("/created", async (req, res) => {
-  const { token } = req.body;
-  const id = jwt.verify(token, config.get("jwtSecret")).user.id;
+  const { id } = req.body;
   const projects = await Project.find({ project_id: id });
   res.json(projects);
 });
@@ -86,8 +82,7 @@ router.post("/created", async (req, res) => {
 // @access Public
 
 router.post("/shared", async (req, res) => {
-  const { token } = req.body;
-  const id = jwt.verify(token, config.get("jwtSecret")).user.id;
+  const { id } = req.body;
   //  get user from token
   const user = await User.findById(id);
 

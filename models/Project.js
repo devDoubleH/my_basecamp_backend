@@ -14,6 +14,10 @@ const ProjectSchema = new Schema({
     required: true,
     ref: "User",
   },
+  owner: {
+    type: String,
+    required: true,
+  },
   members: [
     {
       type: Object,
