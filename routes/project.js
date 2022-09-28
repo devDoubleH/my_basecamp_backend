@@ -15,6 +15,7 @@ router.post(
   [
     check("name", "Please add name").not().isEmpty(),
     check("id", "Please add ID").not().isEmpty(),
+    check("description", "Please add description").not().isEmpty(),
   ],
   async (req, res) => {
     const { name, description, id } = req.body;
@@ -37,9 +38,15 @@ router.post(
         owner: user.name,
         members: [
           {
-            name: user.name,
+            user_id: id,
             email: user.email,
-            permission: "admin",
+            role: "owner",
+            permissions: {
+              create: true,
+              read: true,
+              update: true,
+              delete: true,
+            },
           },
         ],
       });

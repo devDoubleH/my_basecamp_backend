@@ -3,11 +3,12 @@ const { Schema, model, Types } = require("mongoose");
 // Create Schema
 const ProjectSchema = new Schema({
   name: {
-    type: String,
+    type: String, 
     required: true,
   },
   description: {
     type: String,
+    required: true,
   },
   project_id: {
     type: Types.ObjectId,
