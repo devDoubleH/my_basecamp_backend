@@ -79,7 +79,7 @@ router.post(
     check("email", "Please add email").not().isEmpty(),
   ],
   async (req, res) => {
-    const { id, role, permissions } = req.body;
+    const { id, role, permissions, email } = req.body;
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
