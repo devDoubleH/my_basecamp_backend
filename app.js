@@ -10,7 +10,7 @@ connectDB();
 app.use(express.json({ extended: false }));
 app.use(
   cors({
-    origin: "https://dashing-flan-674dc3.netlify.app",
+    origin: "*",
     credentials: true,
   })
 );
