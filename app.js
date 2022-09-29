@@ -10,18 +10,11 @@ connectDB();
 app.use(express.json({ extended: false }));
 app.use(
   cors({
-<<<<<<< HEAD
     origin: "*",
     credentials: true,
   })
 );
-=======
-    origin: "https://guileless-licorice-279856.netlify.app/",
-    credentials: true,
-  })
-);
 
->>>>>>> 4043518 (works)
 app.get("/", (req, res) => res.send("Hello World!"));
 
 app.use("/register", require("./routes/register"));
