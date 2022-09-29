@@ -9,23 +9,25 @@ const Project = require("../models/Project");
 // @access Public
 
 router.put("/:id", (req, res) => {
-  const { name, desciption } = req.body;
+  const { name, description } = req.body;
   const { id } = req.params;
-  if (name) {
-    Project.findOneAndUpdate({ _id: id }, { name }, { new: true }).then(
-      (project) => {
-        res.json(project);
-      }
-    );
-  }
 
-  if (desciption) {
-    Project.findOneAndUpdate({ _id: id }, { desciption }, { new: true }).then(
-      (project) => {
-        res.json(project);
-      }
-    );
-  }
+  Project.findByIdAndUpdate(
+    id,
+    {
+      $set: {
+        name,
+        description,
+      },
+    },
+    { new: true }
+  )
+    .then((project) => {
+      res.json(project);
+    })
+    .catch((err) => {
+      res.status(400).json("Error: " + err);
+    });
 });
 
 // @route DELETE delete/project
